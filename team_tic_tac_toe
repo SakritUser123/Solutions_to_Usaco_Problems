@@ -1,0 +1,90 @@
+# Source: https://usaco.guide/general/io
+import sys
+sys.stdin = open("tttt.in", "r")
+sys.stdout = open("tttt.out", "w")
+from itertools import combinations
+
+letters = []
+won_teams = set()
+won_individuals = set()
+letters.append(list(input()))
+
+letters.append(list(input()))
+
+letters.append(list(input()))
+individual_letters = []
+for i in range(len(letters)):
+    for j in range(len(letters[i])):
+        individual_letters.append(letters[i][j])
+
+
+pairs = combinations(sorted(set(individual_letters)), 2)
+all_possible_pairs = list(pairs)
+
+individual_score = 0
+team_score = 0
+all_possible_ind_teams = set(individual_letters)
+
+
+# rows count
+for i in range(len(letters)):
+    if len(set(letters[i])) == 1 and (set(letters[i]) not in won_individuals):
+        individual_score += 1
+        uni = list(set(letters[i]))
+        won_individuals.add(uni[0])
+    if len(set(letters[i])) == 2 and (tuple(sorted(set(letters[i]))) not in won_teams):
+        team_score += 1
+        uni = tuple(sorted(set(letters[i])))
+        won_teams.add(uni)
+
+# columns count
+for i in range(len(letters)):
+    curr = []
+    curr.append(letters[0][i])
+    curr.append(letters[1][i])
+    curr.append(letters[2][i])
+    if len(set(curr)) == 1 and (set(curr) not in won_individuals):
+        individual_score += 1
+        duo = list(set(curr))
+        won_individuals.add(duo[0])
+
+    if len(set(curr)) == 2 and (tuple(sorted(set(curr))) not in won_teams):
+        team_score += 1
+        uni = tuple(sorted(set(curr)))
+        won_teams.add(uni)
+
+
+# diagnols count
+diagnols = []
+diagnols.append(letters[0][0])
+diagnols.append(letters[1][1])
+diagnols.append(letters[2][2])
+
+if len(set(diagnols)) == 1 and (set(diagnols) not in won_individuals):
+    individual_score += 1
+    duo = list(set(diagnols))
+    won_individuals.add(duo[0])
+
+if len(set(diagnols)) == 2 and (tuple(sorted(set(diagnols))) not in won_teams):
+    team_score += 1
+    uni = tuple(sorted(set(diagnols)))
+    won_teams.add(uni)
+
+diagnols = []
+diagnols.append(letters[0][2])
+diagnols.append(letters[1][1])
+diagnols.append(letters[2][0])
+
+if len(set(diagnols)) == 1 and (set(diagnols) not in won_individuals):
+    individual_score += 1
+    duo = list(set(diagnols))
+    won_individuals.add(duo[0])
+
+if len(set(diagnols)) == 2 and (tuple(sorted(set(diagnols))) not in won_teams):
+    team_score += 1
+    duo = tuple(sorted(set(diagnols)))
+    won_teams.add(duo)
+
+
+print(individual_score)
+print(team_score) 
