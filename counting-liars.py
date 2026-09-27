@@ -1,3 +1,4 @@
+
 N = int(input())
 info = []
 for i in range(N):
@@ -11,6 +12,7 @@ nums = []
 for i in range(len(info)):
     nums.append(info[i][1]-1)
     nums.append(info[i][1]+1)
+    nums.append(info[i][1])
 
 
 
@@ -25,7 +27,6 @@ for i in range(len(nums)):
             if nums[i] > info[j][1]:
                 lie += 1
     lies.append(lie)
-
 
 numbers = []
 for i in range(len(info)):
